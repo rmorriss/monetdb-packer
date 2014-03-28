@@ -1,0 +1,73 @@
+{
+	"builders": [
+	{
+		"http_directory": "configs",
+		"boot_command": [
+			"<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora.cfg<enter><wait>"
+      		],
+		"boot_wait": "20s",
+		"shutdown_command": "shutdown -h now",
+		"guest_os_type": "Fedora_64",
+		"iso_checksum": "f2eeed5102b8890e9e6f4b9053717fe73031e699c4b76dc7028749ab66e7f917",
+		"iso_checksum_type": "sha256",
+		"iso_url": "http://ftp.nluug.nl/ftp/pub/os/Linux/distr/fedora/linux/releases/20/Fedora/x86_64/iso/Fedora-20-x86_64-DVD.iso",
+		"ssh_password": "monetdb",
+		"ssh_username": "root",
+		"ssh_wait_timeout": "20m",
+		"hard_drive_interface": "sata",
+		"vboxmanage": [
+			["modifyvm", "{{.Name}}", "--memory", "4096"],
+			["modifyvm", "{{.Name}}", "--cpus", "2"],
+			["modifyvm", "{{.Name}}", "--chipset", "ich9"],
+			["modifyvm", "{{.Name}}", "--hwvirtex", "on"],
+			["modifyvm", "{{.Name}}", "--pae", "on"],
+			["modifyvm", "{{.Name}}", "--nestedpaging", "on"]
+		],
+		"type": "virtualbox-iso",
+		"vm_name": "MonetDB.R Analytical Database Appliance"
+	}],
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "scripts/user-setup.sh",
+			"destination": "/root/user-setup.sh"
+		},
+		{
+			"type": "file",
+			"source": "scripts/ifup-local.sh",
+			"destination": "/sbin/ifup-local"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/0-base-provisions.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/1-package-install.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/2-ftp-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/3-user-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/4-monetdb-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/5-r-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/6-user-shell-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/99-clean-up.sh"
+        	}
+	]
+}
