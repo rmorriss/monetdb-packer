@@ -28,8 +28,8 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> .bas
 echo "========================================
 MonetDB.R Analytical Database Appliance
 ========================================
-For user setup login with SSH as root and run
-sh user-setup.sh
+For user setup login with SSH as root and run:
+'sh user-setup.sh'
 " > /etc/issue
 
 # Update the welcome message on every network interface change

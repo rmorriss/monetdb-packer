@@ -21,7 +21,10 @@
 			["modifyvm", "{{.Name}}", "--chipset", "ich9"],
 			["modifyvm", "{{.Name}}", "--hwvirtex", "on"],
 			["modifyvm", "{{.Name}}", "--pae", "on"],
-			["modifyvm", "{{.Name}}", "--nestedpaging", "on"]
+			["modifyvm", "{{.Name}}", "--nestedpaging", "on"],
+			["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"],
+			["modifyvm", "{{.Name}}", "--usb", "on"],
+			["modifyvm", "{{.Name}}", "--usbehci", "on"]
 		],
 		"type": "virtualbox-iso",
 		"vm_name": "MonetDB.R Analytical Database Appliance"
@@ -43,7 +46,12 @@
         	},
 		{
 			"type": "shell",
-			"script": "provisioners/1-package-install.sh"
+			"inline": [ "reboot && sleep 10" ]
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/1-package-install.sh",
+			"pause_before": "30s"
         	},
 		{
 			"type": "shell",

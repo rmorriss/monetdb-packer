@@ -6,7 +6,7 @@
 echo "CLEAN-UP"
 
 # Remove old kernels
-package-cleanup --oldkernels --count=1
+#package-cleanup --oldkernels --count=1
 
 # Clean yum cache
 yum clean all
