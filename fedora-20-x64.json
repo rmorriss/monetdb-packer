@@ -24,7 +24,9 @@
 			["modifyvm", "{{.Name}}", "--nestedpaging", "on"],
 			["modifyvm", "{{.Name}}", "--clipboard", "bidirectional"],
 			["modifyvm", "{{.Name}}", "--usb", "on"],
-			["modifyvm", "{{.Name}}", "--usbehci", "on"]
+			["modifyvm", "{{.Name}}", "--usbehci", "on"],
+			["modifyvm", "{{.Name}}", "--natpf1", "guestssh,tcp,,2222,,22"],
+			["storagectl", "{{.Name}}", "--name", "SATA Controller", "--hostiocache", "on"]
 		],
 		"type": "virtualbox-iso",
 		"vm_name": "MonetDB.R Analytical Database Appliance"
@@ -42,7 +44,9 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-base-provisions.sh"
+			"script": "provisioners/0-base-provisions.sh",
+			"only": ["virtualbox-iso"]
+
         	},
 		{
 			"type": "shell",
@@ -72,6 +76,12 @@
 		{
 			"type": "shell",
 			"script": "provisioners/6-user-shell-setup.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/98-install-virtualbox-guest-additions.sh",
+			"only": ["virtualbox-iso"]
+
         	},
 		{
 			"type": "shell",
