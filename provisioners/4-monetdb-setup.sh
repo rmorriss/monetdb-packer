@@ -24,7 +24,7 @@ WantedBy=multi-user.target" > ~/monetdb.service
 
 mv ~/monetdb.service /lib/systemd/system/
 ln -s /lib/systemd/system/monetdb.service  /etc/systemd/system/monetdb.service
-chkconfig vsftpd on monetdb
+chkconfig monetdb on
 service monetdb start
 
 # create default database "db"

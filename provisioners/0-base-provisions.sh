@@ -19,7 +19,11 @@ package-cleanup -y --oldkernels --count=1
 #######################################################
 echo "
 # shell titlebar settings
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> .bashrc
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+echo 'For user setup run:
+`sh user-setup.sh`'
+" >> .bashrc
 
 #######################################################
 # Set welcome message with some info how to log in
