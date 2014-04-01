@@ -14,16 +14,6 @@ yum install -y yum-utils wget
 # Remove old kernels
 package-cleanup -y --oldkernels --count=1
 
-#######################################################
-# Set a different shell titlebar settings
-#######################################################
-echo "
-# shell titlebar settings
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
-echo 'For user setup run:
-`sh user-setup.sh`'
-" >> .bashrc
 
 #######################################################
 # Set welcome message with some info how to log in
@@ -33,14 +23,12 @@ echo "========================================
 MonetDB.R Analytical Database Appliance
 https://monetdb.org
 ========================================
-For user setup login and run:
-'sh user-setup.sh'
-
 To login remotely use:
 'ssh -p 2222 root@127.0.0.1'
 Default password: monetdb
 
-
+For first-time user setup login and run:
+'sh user-setup.sh'
 " > /etc/issue
 
 
