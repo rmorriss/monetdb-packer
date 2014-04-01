@@ -43,6 +43,16 @@
 			"destination": "/sbin/ifup-local"
 		},
 		{
+			"type": "file",
+			"source": "scripts/monetdbshell.sh",
+			"destination": "/root/monetdbshell.sh"
+		},
+		{
+			"type": "file",
+			"source": "scripts/rshell.sh",
+			"destination": "/root/rshell.sh"
+		},
+		{
 			"type": "shell",
 			"script": "provisioners/0-base-provisions.sh",
 			"only": ["virtualbox-iso"]
