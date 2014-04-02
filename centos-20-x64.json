@@ -8,9 +8,9 @@
 		"boot_wait": "20s",
 		"shutdown_command": "shutdown -h now",
 		"guest_os_type": "Fedora_64",
-		"iso_checksum": "f2eeed5102b8890e9e6f4b9053717fe73031e699c4b76dc7028749ab66e7f917",
+		"iso_checksum": "f9d84907d77df62017944cb23cab66305e94ee6ae6c1126415b81cc5e999bdd0",
 		"iso_checksum_type": "sha256",
-		"iso_url": "http://ftp.nluug.nl/ftp/pub/os/Linux/distr/fedora/linux/releases/20/Fedora/x86_64/iso/Fedora-20-x86_64-DVD.iso",
+		"iso_url": "http://ftp.nluug.nl/ftp/pub/os/Linux/distr/CentOS/6.5/isos/x86_64/CentOS-6.5-x86_64-minimal.iso",
 		"ssh_password": "monetdb",
 		"ssh_username": "root",
 		"ssh_wait_timeout": "20m",
@@ -64,7 +64,11 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/1-package-install-fedora.sh",
+			"script": "provisioners/0-extra-base-provisions-epel.sh"
+        	},
+		{
+			"type": "shell",
+			"script": "provisioners/1-package-install-epel.sh",
 			"pause_before": "30s"
         	},
 		{
