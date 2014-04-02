@@ -49,4 +49,6 @@ mclient db -s "CREATE SCHEMA \"voc\" AUTHORIZATION \"user\""
 echo "LOAD VOC DATA"
 wget http://dev.monetdb.org/Assets/VOC/voc_dump.sql.gz
 gunzip voc_dump.sql.gz
-mclient db < voc_dump.sql
+mv voc_dump.sql /home/monetdb/voc_dump.sql
+chown monetdb voc_dump.sql
+runuser -l monetdb -c 'mclient db < voc_dump.sql'
