@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #######################################################
-# User setup
+# MonetDB setup
 #######################################################
 echo "MONETDB SETUP"
 chsh -s "/bin/bash" monetdb
@@ -40,15 +40,5 @@ mpw=`openssl rand -base64 14`
 mclient db -s "alter user set unencrypted password '$mpw' using old password 'monetdb'";
 echo -e "user=monetdb\npassword=$mpw" > ~/.monetdb
 
-# create 'user' role and the VOC schema
-echo "CREATE USER ROLE AND SCHEMA"
-mclient db -s "CREATE ROLE \"user\""
-mclient db -s "CREATE SCHEMA \"voc\" AUTHORIZATION \"user\""
-
-# load VOC dataset
-echo "LOAD VOC DATA"
-wget http://dev.monetdb.org/Assets/VOC/voc_dump.sql.gz
-gunzip voc_dump.sql.gz
-mv voc_dump.sql /home/monetdb/voc_dump.sql
-chown monetdb /home/monetdb/voc_dump.sql
-runuser -l monetdb -c 'mclient db < voc_dump.sql'
+# Make the load-voc-data scirpt executable
+chmod +x load-voc-data.sh

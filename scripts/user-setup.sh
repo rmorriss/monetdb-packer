@@ -1,6 +1,7 @@
 #!/bin/sh
 
 if [ -f ~/.setupdone ]; then
+    echo "User setup was already done."
 	exit
 fi
 
@@ -32,15 +33,23 @@ sudo mv /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
 sudo mv ~/sshd_config /etc/ssh/sshd_config
 sudo service sshd restart
 
-# create new user and set password
+echo "Re-create user and schema"
+# drop user and voc schema
 mclient db -s "DROP USER \"monetdbuser\""
-mclient db -s "CREATE USER \"monetdbuser\" WITH PASSWORD '$pw' NAME 'monetdbuser' SCHEMA \"voc\""
-# create the 'monetdbuser' the 'user' role
-mclient db -s "GRANT \"user\" TO \"monetdbuser\";"
+mclient db -s "DROP SCHEMA \"voc\""
+# create new user and set password
+mclient db -s "CREATE USER \"monetdbuser\" WITH PASSWORD '$pw' NAME 'monetdbuser' SCHEMA \"sys\""
+# create schema voc and set it as the dedault for the monetdbuser user
+mclient db -s "CREATE SCHEMA \"voc\" AUTHORIZATION \"monetdbuser\""
+mclient db -s "ALTER USER \"monetdbuser\" SET SCHEMA \"voc\""
 
+# Store the password for the user
 echo -e "user=monetdbuser\npassword=$pw" > ~/.monetdbuser
 sudo cp  ~/.monetdbuser /home/monetdb/.monetdb
 sudo cp  ~/.monetdbuser /home/rstats/.monetdb
+
+# Load VOC data
+sh load-voc-data.sh
 
 echo "All done, now login with the monetdb or rstats username and the password you just set."
 

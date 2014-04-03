@@ -39,6 +39,11 @@
 		},
 		{
 			"type": "file",
+			"source": "scripts/load-voc-data.sh",
+			"destination": "/root/load-voc-data.sh"
+		},
+		{
+			"type": "file",
 			"source": "scripts/ifup-local.sh",
 			"destination": "/sbin/ifup-local"
 		},
