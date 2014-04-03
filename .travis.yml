@@ -1,4 +1,14 @@
-before_install: wget --no-check-certificate https://dl.bintray.com/mitchellh/packer/0.5.2_linux_amd64.zip && unzip -d packer 0.5.2_linux_amd64.zip
+install:
+	- sudo echo "deb http://download.virtualbox.org/virtualbox/debian precise contrib" | sudo tee -a /etc/apt/sources.list
+	- wget http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+	- sudo apt-get update
+	- sudo apt-get -y install linux-headers-$(uname -r)
+	- sudo apt-get -y install virtualbox-4.2
+	- VBoxManage -v
+	- wget https://dl.bintray.com/mitchellh/packer/0.5.2_linux_amd64.zip && unzip -d packer 0.5.2_linux_amd64.zip
+
 before_script: export PATH=$PATH:$PWD/packer
 
-script: packer validate fedora-20-x64.json && packer build fedora-20-x64.json
+script:
+	- packer validate fedora-20-x64.json
+	- packer build fedora-20-x64.json
