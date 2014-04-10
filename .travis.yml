@@ -1,3 +1,6 @@
+cache:
+	- apt
+
 install:
 	- sudo echo "deb http://download.virtualbox.org/virtualbox/debian precise contrib" | sudo tee -a /etc/apt/sources.list
 	- wget http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
@@ -7,7 +10,8 @@ install:
 	- VBoxManage -v
 	- wget https://dl.bintray.com/mitchellh/packer/0.5.2_linux_amd64.zip && unzip -d packer 0.5.2_linux_amd64.zip
 
-before_script: export PATH=$PATH:$PWD/packer
+before_script:
+	- export PATH=$PATH:$PWD/packer
 
 script:
 	- packer validate fedora-20-x64.json
