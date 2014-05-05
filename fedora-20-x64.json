@@ -31,8 +31,13 @@
 				["modifyvm", "{{.Name}}", "--usbehci", "on"],
 				["modifyvm", "{{.Name}}", "--natpf1", "guestssh,tcp,,2222,,22"],
 				["storagectl", "{{.Name}}", "--name", "SATA Controller", "--hostiocache", "on"]
+
 			],
-			"vm_name": "MonetDB.R Analytical Database Appliance"
+			"vboxmanage_post": [
+				["modifyvm", "{{.Name}}", "--memory", "2048"]
+			],
+			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
+			"vm_name": "MonetDB+R Analytical Database Appliance"
 		}
 	],
 	"provisioners": [
