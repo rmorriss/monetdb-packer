@@ -6,12 +6,11 @@
 echo "R SETUP"
 # install MonetDB.R connector
 R -e "install.packages('MonetDB.R',repos='http://cran.rstudio.com/')"
-R -e "install.packages('dplyr',repos='http://cran.rstudio.com/')"
+#R -e "install.packages('dplyr',repos='http://cran.rstudio.com/')"
 
 # add R startup file to automatically connect to MonetDB
 echo 'local({
 	library(MonetDB.R)
-    library(dplyr)
 	cat("\nWelcome to MonetDB.R!\n")
 	mdbfile <- readLines(file.path("~",".monetdb"))
 	usr <- sub("user=","",grep("^user=",mdbfile,value=T),fixed=T)[[1]]

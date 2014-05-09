@@ -31,13 +31,12 @@
 				["modifyvm", "{{.Name}}", "--usbehci", "on"],
 				["modifyvm", "{{.Name}}", "--natpf1", "guestssh,tcp,,2222,,22"],
 				["storagectl", "{{.Name}}", "--name", "SATA Controller", "--hostiocache", "on"]
-
 			],
 			"vboxmanage_post": [
 				["modifyvm", "{{.Name}}", "--memory", "2048"]
 			],
 			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
-			"vm_name": "MonetDB+R Analytical Database Appliance"
+			"vm_name": "MonetDB+R Analytical Database Sandbox"
 		}
 	],
 	"provisioners": [
@@ -71,7 +70,7 @@
 			"script": "provisioners/0-base-provisions.sh",
 			"only": ["virtualbox-iso"]
 
-        	},
+		},
 		{
 			"type": "shell",
 			"inline": [ "reboot && sleep 10" ]
@@ -80,36 +79,36 @@
 			"type": "shell",
 			"script": "provisioners/1-package-install-fedora.sh",
 			"pause_before": "30s"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/2-ftp-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/3-user-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/4-monetdb-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/5-r-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/6-user-shell-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/98-install-virtualbox-guest-additions.sh",
 			"only": ["virtualbox-iso"]
 
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/99-clean-up.sh"
-        	}
+		}
 	]
 }

@@ -8,7 +8,7 @@
 		{
 			"type": "virtualbox-iso",
 			"http_directory": "configs",
-			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora.cfg<enter><wait>"],
+			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos.cfg<enter><wait>"],
 			"boot_wait": "20s",
 			"shutdown_command": "shutdown -h now",
 			"guest_os_type": "Fedora_64",
@@ -36,8 +36,7 @@
 				["modifyvm", "{{.Name}}", "--memory", "2048"]
 			],
 			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
-			"export_opts": ["--vendor", "MonetDB Solutions", "--vendorurl", "https://monetdbsolutions.com"],
-			"vm_name": "MonetDB.R Analytical Database Appliance"
+			"vm_name": "MonetDB+R Analytical Database Sandbox"
 		}
 	],
 	"provisioners": [
@@ -67,50 +66,61 @@
 			"destination": "/root/rshell.sh"
 		},
 		{
+			"type": "file",
+			"source": "scripts/monetdbd.service",
+			"destination": "/root/monetdbd.service"
+		},
+		{
+			"type": "file",
+			"source": "configs/rserver.conf",
+			"destination": "/root/rserver.conf"
+		},
+		{
 			"type": "shell",
 			"script": "provisioners/0-base-provisions.sh",
 			"only": ["virtualbox-iso"]
 
-        	},
+		},
 		{
 			"type": "shell",
 			"inline": [ "reboot && sleep 10" ]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-extra-base-provisions-epel.sh"
-        	},
+			"script": "provisioners/0-extra-base-provisions-epel.sh",
+			"pause_before": "30s"
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/1-package-install-epel.sh",
 			"pause_before": "30s"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/2-ftp-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/3-user-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
-			"script": "provisioners/4-monetdb-setup.sh"
-        	},
+			"script": "provisioners/4-monetdb-setup-epel.sh"
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/5-r-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/6-user-shell-setup.sh"
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/98-install-virtualbox-guest-additions.sh",
 			"only": ["virtualbox-iso"]
 
-        	},
+		},
 		{
 			"type": "shell",
 			"script": "provisioners/99-clean-up.sh"
