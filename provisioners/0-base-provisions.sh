@@ -20,8 +20,9 @@ package-cleanup -y --oldkernels --count=1
 #######################################################
 # Set a new welcome banner
 echo "========================================
-MonetDB.R Analytical Database Appliance
+MonetDB+R Analytical Database Sandbox
 https://monetdb.org
+https://monetdbsolutions.com
 ========================================
 To login remotely use:
 'ssh -p 2222 root@127.0.0.1'

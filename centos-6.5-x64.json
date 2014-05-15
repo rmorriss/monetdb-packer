@@ -37,6 +37,16 @@
 			],
 			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
 			"vm_name": "MonetDB+R Analytical Database Sandbox"
+		},
+		{
+			"type": "amazon-ebs",
+			"access_key": "{{user `AWS_ACCESS_KEY_ID`}}",
+			"secret_key": "{{user `AWS_SECRET_ACCESS_KEY`}}",
+			"region": "eu-west-1",
+			"source_ami": "ami-4b18e33c",
+			"instance_type": "m3.medium",
+			"ssh_username": "root",
+			"ami_name": "MonetDB+R Analytical Database Sandbox {{timestamp}}"
 		}
 	],
 	"provisioners": [
@@ -79,11 +89,11 @@
 			"type": "shell",
 			"script": "provisioners/0-base-provisions.sh",
 			"only": ["virtualbox-iso"]
-
 		},
 		{
 			"type": "shell",
-			"inline": [ "reboot && sleep 10" ]
+			"inline": [ "reboot && sleep 10" ],
+			"only": ["virtualbox-iso"]
 		},
 		{
 			"type": "shell",
