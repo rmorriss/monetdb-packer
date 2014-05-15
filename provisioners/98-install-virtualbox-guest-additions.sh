@@ -19,5 +19,7 @@ sh /tmp/vbox-guest-additions/VBoxLinuxAdditions.run
 # Cleanup files
 umount vbox-guest-additions
 rm -rf vbox-guest-additions
+# Remove VirtualBox Guest additions ISOs
+rm -rf VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.?
 # And packages
 yum -y remove kernel-devel kernel-debug-devel dkms

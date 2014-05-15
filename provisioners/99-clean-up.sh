@@ -14,9 +14,6 @@ yum clean all
 # Clean-up chaches
 rm -rf /var/cache/* /usr/share/doc/*
 
-# Remove VirtualBox Guest additions ISOs
-rm -rf VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.?
-
 # Clean-up the unused disk space
 #cat /dev/zero > /tmp/zero.fill
 #rm -rf /tmp/zero.fill
