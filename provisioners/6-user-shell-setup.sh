@@ -7,11 +7,11 @@
 echo "USER SHELL SETUP"
 
 # Set the monetdbshell.sh shell
-mv ~/monetdbshell.sh /home/monetdb/
-chmod +x /home/monetdb/monetdbshell.sh
-chsh -s "/home/monetdb/monetdbshell.sh" monetdb
+sudo mv ~/monetdbshell.sh /home/monetdb/
+sudo chmod +x /home/monetdb/monetdbshell.sh
+sudo chsh -s "/home/monetdb/monetdbshell.sh" monetdb
 
 # Set the rshell.sh shell
-mv ~/rshell.sh /home/rstats/
-chmod +x /home/rstats/rshell.sh
-chsh -s "/home/rstats/rshell.sh" rstats
+sudo mv ~/rshell.sh /home/rstats/
+sudo chmod +x /home/rstats/rshell.sh
+sudo chsh -s "/home/rstats/rshell.sh" rstats

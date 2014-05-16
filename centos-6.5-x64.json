@@ -40,50 +40,48 @@
 		},
 		{
 			"type": "amazon-ebs",
-			"access_key": "{{user `AWS_ACCESS_KEY_ID`}}",
-			"secret_key": "{{user `AWS_SECRET_ACCESS_KEY`}}",
 			"region": "eu-west-1",
 			"source_ami": "ami-4b18e33c",
 			"instance_type": "m3.medium",
-			"ssh_username": "root",
-			"ami_name": "MonetDB+R Analytical Database Sandbox {{timestamp}}"
+			"ssh_username": "ec2-user",
+			"ami_name": "MonetDB-{{timestamp}}"
 		}
 	],
 	"provisioners": [
 		{
 			"type": "file",
 			"source": "scripts/user-setup.sh",
-			"destination": "/root/user-setup.sh"
+			"destination": "~/user-setup.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/load-voc-data.sh",
-			"destination": "/root/load-voc-data.sh"
+			"destination": "~/load-voc-data.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/ifup-local.sh",
-			"destination": "/sbin/ifup-local"
+			"destination": "~/ifup-local"
 		},
 		{
 			"type": "file",
 			"source": "scripts/monetdbshell.sh",
-			"destination": "/root/monetdbshell.sh"
+			"destination": "~/monetdbshell.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/rshell.sh",
-			"destination": "/root/rshell.sh"
+			"destination": "~/rshell.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/monetdbd.service",
-			"destination": "/root/monetdbd.service"
+			"destination": "~/monetdbd.service"
 		},
 		{
 			"type": "file",
 			"source": "configs/rserver.conf",
-			"destination": "/root/rserver.conf"
+			"destination": "~/rserver.conf"
 		},
 		{
 			"type": "shell",
@@ -98,12 +96,12 @@
 		{
 			"type": "shell",
 			"script": "provisioners/0-extra-base-provisions-epel.sh",
+			"only": ["virtualbox-iso", "docker"],
 			"pause_before": "30s"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/1-package-install-epel.sh",
-			"pause_before": "30s"
+			"script": "provisioners/1-package-install-epel.sh"
 		},
 		{
 			"type": "shell",
@@ -112,6 +110,11 @@
 		{
 			"type": "shell",
 			"script": "provisioners/3-user-setup.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/4-0-open-ports-epel.sh",
+			"only": ["virtualbox-iso", "docker"]
 		},
 		{
 			"type": "shell",
@@ -127,9 +130,13 @@
 		},
 		{
 			"type": "shell",
+			"script": "provisioners/97-set-motd.sh",
+			"only": ["virtualbox-iso", "docker"]
+		},
+		{
+			"type": "shell",
 			"script": "provisioners/98-install-virtualbox-guest-additions.sh",
 			"only": ["virtualbox-iso"]
-
 		},
 		{
 			"type": "shell",

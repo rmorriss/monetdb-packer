@@ -6,13 +6,13 @@
 echo "CLEAN-UP"
 
 # Remove old kernels
-package-cleanup -y --oldkernels --count=1
+sudo package-cleanup -y --oldkernels --count=1
 
 # Clean yum cache
-yum clean all
+sudo yum clean all
 
 # Clean-up chaches
-rm -rf /var/cache/* /usr/share/doc/*
+sudo rm -rf /var/cache/* /usr/share/doc/*
 
 # Clean-up the unused disk space
 #cat /dev/zero > /tmp/zero.fill

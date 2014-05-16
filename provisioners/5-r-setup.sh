@@ -5,7 +5,7 @@
 #######################################################
 echo "R SETUP"
 # install MonetDB.R connector
-R -e "install.packages('MonetDB.R',repos='http://cran.rstudio.com/')"
+sudo R -e "install.packages('MonetDB.R',repos='http://cran.rstudio.com/')"
 #R -e "install.packages('dplyr',repos='http://cran.rstudio.com/')"
 
 # add R startup file to automatically connect to MonetDB
@@ -20,4 +20,4 @@ echo 'local({
 	cat("MonetDB connection available in monetdbconn, credentials in monetdbcredentials\n")
 	cat("\nExample: dbGetQuery(monetdbconn,\"SELECT 1\")\n")
 })' > ~/Rprofile.site
-mv ~/Rprofile.site /usr/lib64/R/etc/
+sudo mv ~/Rprofile.site /usr/lib64/R/etc/

@@ -5,23 +5,21 @@
 #######################################################
 echo "MONETDB SETUP"
 # change shell for the monetdb user
-chsh -s "/bin/bash" monetdb
-
-# open port 50000
-iptables -A INPUT -m state --state NEW -p tcp --dport 50000 -j ACCEPT
-/etc/init.d/iptables restart
+sudo chsh -s "/bin/bash" monetdb
 
 # create dbfarm and rig .monetdb file for monetdb user
-runuser -l monetdb -c 'monetdbd create /var/monetdb5/dbfarm'
+sudo -u monetdb -i monetdbd create /var/monetdb5/dbfarm
 # enable start of MonetDB at system startup
-cp ~/monetdbd.service /etc/init.d/monetdbd
-chmod +x /etc/init.d/monetdbd
-chkconfig --add monetdbd
-chkconfig monetdbd on
-service monetdbd start
+sudo cp ~/monetdbd.service /etc/init.d/monetdbd
+sudo chmod +x /etc/init.d/monetdbd
+sudo chkconfig --add monetdbd
+sudo chkconfig monetdbd on
+sudo service monetdbd start
 
 # create default database "db"
-runuser -l monetdb -c 'monetdb create db && monetdb release db && monetdb start db'
+sudo -u monetdb -i monetdb create db
+sudo -u monetdb -i monetdb release db
+sudo -u monetdb -i monetdb start db
 
 # set config file for admin management if that was not done already
 if [ ! -f ~/.monetdb ]; then
