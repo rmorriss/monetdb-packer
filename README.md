@@ -4,10 +4,13 @@ monetdb-packer
 Packer templates, provisioning scripts and Kickstart configs for building the MonetDB.R Analytical Database Appliance images.
 * Templates for building the images for:
 	* VirtualBox
+	* Docker
+	* AWS AMI
 * Scripts for installing software, setting-up the environment and loading data:
 	* Getting the IP address of the machine and adding it to the welcome screeen
 	* Setting up user shells
 * Kickstart configs for unattended OS installation for:
+	* CentOS 6.5 / Amazon Linux x86_64
 	* Fedora 20 x86_64
 
 Usage
