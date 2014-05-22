@@ -41,7 +41,7 @@
 		{
 			"type": "amazon-ebs",
 			"region": "eu-west-1",
-			"source_ami": "ami-4b18e33c",
+			"source_ami": "ami-2918e35e",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{timestamp}}"
