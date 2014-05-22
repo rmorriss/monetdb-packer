@@ -90,6 +90,11 @@
 		},
 		{
 			"type": "shell",
+			"script": "provisioners/0-base-provisions-aws.sh",
+			"only": ["amazon-ebs"]
+		},
+		{
+			"type": "shell",
 			"inline": [ "reboot && sleep 10" ],
 			"only": ["virtualbox-iso"]
 		},
@@ -130,8 +135,12 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/97-set-motd.sh",
+			"script": "provisioners/96-set-issue.sh",
 			"only": ["virtualbox-iso", "docker"]
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/97-set-motd.sh"
 		},
 		{
 			"type": "shell",
