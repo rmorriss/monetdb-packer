@@ -48,7 +48,7 @@
 			"source_ami": "ami-fb8e9292",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
-			"ami_name": "MonetDB-{{timestamp}}",
+			"ami_name": "MonetDB-{{isotime | clean_ami_name}}",
 			"ami_description": "{{user `image_name`}}"
 		}
 	],
