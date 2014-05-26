@@ -1,4 +1,8 @@
 {
+	"variables": {
+		"os_type": "centos",
+		"image_name": "MonetDB Analytical Database with R"
+	},
 	"builders": [
 		{
 			"type": "docker",
@@ -8,7 +12,7 @@
 		{
 			"type": "virtualbox-iso",
 			"http_directory": "configs",
-			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos.cfg<enter><wait>"],
+			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `os_type`}}.cfg<enter><wait>"],
 			"boot_wait": "20s",
 			"shutdown_command": "shutdown -h now",
 			"guest_os_type": "Fedora_64",
@@ -35,8 +39,8 @@
 			"vboxmanage_post": [
 				["modifyvm", "{{.Name}}", "--memory", "2048"]
 			],
-			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
-			"vm_name": "MonetDB+R Analytical Database Sandbox"
+			"export_opts": ["--vsys", "0", "--vendor", "MonetDB Solutions", "--vendorurl", "https://monetdbsolutions.com"],
+			"vm_name": "{{user `image_name`}}"
 		},
 		{
 			"type": "amazon-ebs",
@@ -45,7 +49,7 @@
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{timestamp}}",
-			"ami_description": "MonetDB Analytical Database with R"
+			"ami_description": "{{user `image_name`}}"
 		}
 	],
 	"provisioners": [
@@ -86,12 +90,12 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-base-provisions.sh",
+			"script": "provisioners/00-base-provisions-vbox.sh",
 			"only": ["virtualbox-iso"]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-base-provisions-aws.sh",
+			"script": "provisioners/00-base-provisions-aws.sh",
 			"only": ["amazon-ebs"]
 		},
 		{
@@ -101,38 +105,33 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-extra-base-provisions-epel.sh",
-			"only": ["virtualbox-iso", "docker"],
+			"script": "provisioners/10-package-install-{{user `os_type`}}.sh",
 			"pause_before": "30s"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/1-package-install-epel.sh"
+			"script": "provisioners/20-ftp-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/2-ftp-setup.sh"
+			"script": "provisioners/30-user-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/3-user-setup.sh"
-		},
-		{
-			"type": "shell",
-			"script": "provisioners/4-0-open-ports-epel.sh",
+			"script": "provisioners/40-open-ports-{{user `os_type`}}.sh",
 			"only": ["virtualbox-iso", "docker"]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/4-monetdb-setup-epel.sh"
+			"script": "provisioners/41-monetdb-setup-{{user `os_type`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/5-r-setup.sh"
+			"script": "provisioners/50-r-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/6-user-shell-setup.sh"
+			"script": "provisioners/60-user-shell-setup.sh"
 		},
 		{
 			"type": "shell",

@@ -1,14 +1,18 @@
 {
+	"variables": {
+		"os_type": "centos",
+		"image_name": "MonetDB Analytical Database with R"
+	},
 	"builders": [
 		{
 			"type": "docker",
-			"image": "fedora",
+			"image": "{{user `os_type`}}",
 			"export_path": "output-docker"
 		},
 		{
 			"type": "virtualbox-iso",
 			"http_directory": "configs",
-			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/fedora.cfg<enter><wait>"],
+			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `os_type`}}.cfg<enter><wait>"],
 			"boot_wait": "20s",
 			"shutdown_command": "shutdown -h now",
 			"guest_os_type": "Fedora_64",
@@ -35,76 +39,89 @@
 			"vboxmanage_post": [
 				["modifyvm", "{{.Name}}", "--memory", "2048"]
 			],
-			"export_opts": ["--vsys", "0", "--vendor", "'MonetDB Solutions'", "--vendorurl", "https://monetdbsolutions.com"],
-			"vm_name": "MonetDB+R Analytical Database Sandbox"
+			"export_opts": ["--vsys", "0", "--vendor", "MonetDB Solutions", "--vendorurl", "https://monetdbsolutions.com"],
+			"vm_name": "{{user `image_name`}}"
 		}
 	],
 	"provisioners": [
 		{
 			"type": "file",
 			"source": "scripts/user-setup.sh",
-			"destination": "/root/user-setup.sh"
+			"destination": "~/user-setup.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/load-voc-data.sh",
-			"destination": "/root/load-voc-data.sh"
+			"destination": "~/load-voc-data.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/ifup-local.sh",
-			"destination": "/sbin/ifup-local"
+			"destination": "~/ifup-local"
 		},
 		{
 			"type": "file",
 			"source": "scripts/monetdbshell.sh",
-			"destination": "/root/monetdbshell.sh"
+			"destination": "~/monetdbshell.sh"
 		},
 		{
 			"type": "file",
 			"source": "scripts/rshell.sh",
-			"destination": "/root/rshell.sh"
+			"destination": "~/rshell.sh"
+		},
+		{
+			"type": "file",
+			"source": "scripts/monetdbd.service",
+			"destination": "~/monetdbd.service"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/0-base-provisions.sh",
+			"script": "provisioners/00-base-provisions-vbox.sh",
 			"only": ["virtualbox-iso"]
-
 		},
 		{
 			"type": "shell",
-			"inline": [ "reboot && sleep 10" ]
+			"inline": [ "reboot && sleep 10" ],
+			"only": ["virtualbox-iso"]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/1-package-install-fedora.sh",
+			"script": "provisioners/10-package-install-{{user `os_type`}}.sh",
 			"pause_before": "30s"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/2-ftp-setup.sh"
+			"script": "provisioners/20-ftp-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/3-user-setup.sh"
+			"script": "provisioners/30-user-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/4-monetdb-setup.sh"
+			"script": "provisioners/41-monetdb-setup-{{user `os_type`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/5-r-setup.sh"
+			"script": "provisioners/50-r-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/6-user-shell-setup.sh"
+			"script": "provisioners/60-user-shell-setup.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/96-set-issue.sh",
+			"only": ["virtualbox-iso", "docker"]
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/97-set-motd.sh"
 		},
 		{
 			"type": "shell",
 			"script": "provisioners/98-install-virtualbox-guest-additions.sh",
 			"only": ["virtualbox-iso"]
-
 		},
 		{
 			"type": "shell",
