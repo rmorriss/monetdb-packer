@@ -40,11 +40,12 @@
 		},
 		{
 			"type": "amazon-ebs",
-			"region": "eu-west-1",
-			"source_ami": "ami-2918e35e",
+			"region": "us-east-1",
+			"source_ami": "ami-fb8e9292",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
-			"ami_name": "MonetDB-{{timestamp}}"
+			"ami_name": "MonetDB-{{timestamp}}",
+			"ami_description": "MonetDB Analytical Database with R"
 		}
 	],
 	"provisioners": [
