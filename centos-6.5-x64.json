@@ -100,6 +100,11 @@
 		},
 		{
 			"type": "shell",
+			"script": "provisioners/00-base-provisions-docker.sh",
+			"only": ["docker"]
+		},
+		{
+			"type": "shell",
 			"inline": [ "reboot && sleep 10" ],
 			"only": ["virtualbox-iso"]
 		},
