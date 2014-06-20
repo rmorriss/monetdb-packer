@@ -49,7 +49,8 @@
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{isotime | clean_ami_name}}",
-			"ami_description": "{{user `image_name`}}"
+			"ami_description": "{{user `image_name`}}",
+			"ami_regions": ["eu-west-1"]
 		}
 	],
 	"provisioners": [
