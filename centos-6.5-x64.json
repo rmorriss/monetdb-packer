@@ -44,13 +44,13 @@
 		},
 		{
 			"type": "amazon-ebs",
-			"region": "us-east-1",
+			"region": "eu-west-1",
 			"source_ami": "ami-978d91fe",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{isotime | clean_ami_name}}",
 			"ami_description": "{{user `image_name`}}",
-			"ami_regions": ["eu-west-1"]
+			"ami_regions": ["us-east-1"]
 		}
 	],
 	"provisioners": [
