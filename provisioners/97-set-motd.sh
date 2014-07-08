@@ -7,7 +7,7 @@ echo "Set motd"
 
 echo "
 =============================================
-MonetDB Analytical Database Appliance with R
+MonetDB Analytical Database with R
 https://monetdbsolutions.com
 =============================================
 
