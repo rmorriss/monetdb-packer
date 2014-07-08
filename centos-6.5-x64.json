@@ -15,7 +15,7 @@
 			"boot_command": ["<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `os_type`}}.cfg<enter><wait>"],
 			"boot_wait": "20s",
 			"shutdown_command": "shutdown -h now",
-			"guest_os_type": "Fedora_64",
+			"guest_os_type": "RedHat_64",
 			"iso_checksum": "f9d84907d77df62017944cb23cab66305e94ee6ae6c1126415b81cc5e999bdd0",
 			"iso_checksum_type": "sha256",
 			"iso_url": "http://ftp.nluug.nl/ftp/pub/os/Linux/distr/CentOS/6.5/isos/x86_64/CentOS-6.5-x86_64-minimal.iso",
@@ -45,7 +45,7 @@
 		{
 			"type": "amazon-ebs",
 			"region": "eu-west-1",
-			"source_ami": "ami-978d91fe",
+			"source_ami": "ami-4b18e33c",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{isotime | clean_ami_name}}",
