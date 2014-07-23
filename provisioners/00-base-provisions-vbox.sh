@@ -12,7 +12,7 @@ yum upgrade -y
 # Install some needed packages
 yum install -y yum-utils wget
 # Remove old kernels
-package-cleanup -y
+package-cleanup -y --oldkernels --count=1
 
 #######################################################
 # Configure services
