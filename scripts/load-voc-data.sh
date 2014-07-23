@@ -5,7 +5,11 @@
 #######################################################
 echo "Loading VOC dataset"
 
-wget http://dev.monetdb.org/Assets/VOC/voc_dump.sql.gz
+# create schema voc and set it as the dedault for the monetdbuser user
+mclient db -s "CREATE SCHEMA \"voc\" AUTHORIZATION \"monetdbuser\""
+mclient db -s "ALTER USER \"monetdbuser\" SET SCHEMA \"voc\""
+
+wget https://dev.monetdb.org/Assets/VOC/voc_dump.sql.gz
 gunzip voc_dump.sql.gz
 # Add set schema statement
 sed -i '1s/^/SET SCHEMA "voc";\n/' voc_dump.sql

@@ -1,6 +1,7 @@
 {
 	"variables": {
 		"os_type": "centos",
+		"os_version": "6.5",
 		"image_name": "MonetDB Analytical Database with R"
 	},
 	"builders": [
@@ -45,7 +46,7 @@
 		{
 			"type": "amazon-ebs",
 			"region": "eu-west-1",
-			"source_ami": "ami-4b18e33c",
+			"source_ami": "ami-892fe1fe",
 			"instance_type": "m3.medium",
 			"ssh_username": "ec2-user",
 			"ami_name": "MonetDB-{{isotime | clean_ami_name}}",
@@ -81,13 +82,8 @@
 		},
 		{
 			"type": "file",
-			"source": "scripts/monetdbd.service",
-			"destination": "~/monetdbd.service"
-		},
-		{
-			"type": "file",
-			"source": "configs/rserver.conf",
-			"destination": "~/rserver.conf"
+			"source": "configs/monetdbd.centos",
+			"destination": "~/monetdbd.centos"
 		},
 		{
 			"type": "shell",
@@ -110,34 +106,41 @@
 			"only": ["virtualbox-iso"]
 		},
 		{
+			"pause_before": "30s",
 			"type": "shell",
-			"script": "provisioners/10-package-install-{{user `os_type`}}.sh",
-			"pause_before": "30s"
+			"script": "provisioners/01-enable-epel-repo-{{user `os_type`}}{{user `os_version`}}.sh",
+			"only": ["virtualbox-iso", "docker"]
+		},
+		{
+			"pause_before": "30s",
+			"type": "shell",
+			"script": "provisioners/01-enable-epel-repo-aws.sh",
+			"only": ["amazon-ebs"]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/20-ftp-setup.sh"
+			"script": "provisioners/10-package-install-{{user `os_type`}}{{user `os_version`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-user-setup.sh"
+			"script": "provisioners/20-user-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/40-open-ports-{{user `os_type`}}.sh",
+			"script": "provisioners/30-0-open-ports-{{user `os_type`}}.sh",
 			"only": ["virtualbox-iso", "docker"]
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/41-monetdb-setup-{{user `os_type`}}.sh"
+			"script": "provisioners/30-monetdb-setup-{{user `os_type`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/50-r-setup.sh"
+			"script": "provisioners/40-r-setup.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/60-user-shell-setup.sh"
+			"script": "provisioners/50-user-shell-setup.sh"
 		},
 		{
 			"type": "shell",

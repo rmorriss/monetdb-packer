@@ -2,15 +2,22 @@ monetdb-packer
 ==============
 
 Packer templates, provisioning scripts and Kickstart configs for building the MonetDB.R Analytical Database Appliance images.
+* Templates and scripts for for building the images for:
+	* CentOS 6.5 / Amazon Linux 2014.3.2
+	* CentOS 7
+	* Fedora 20
 * Templates for building the images for:
-	* VirtualBox
-	* Docker
-	* AWS AMI
+	* AWS AMI (HVM, EBS-based)
+	* VirtualBox OVF (ISO-based)
+	* Docker container
 * Scripts for installing software, setting-up the environment and loading data:
-	* Getting the IP address of the machine and adding it to the welcome screeen
+	* MonetDB service definition
+	* Setting lognin screen and motd
 	* Setting up user shells
+	* Setting up non-admin users
+	* Loading sample VOC dataset
 * Kickstart configs for unattended OS installation for:
-	* CentOS 6.5 / Amazon Linux x86_64
+	* CentOS 6.5 / 7
 	* Fedora 20 x86_64
 
 Usage
@@ -21,6 +28,10 @@ packer validate <template>.json
 packer build <template>.json
 ```
 
+Read more
+---------
+https://monetdbsolutions.com/solutions/cloud
+
 MonetDB.R
 ----------
 http://monetr.r-forge.r-project.org
@@ -29,7 +40,6 @@ Packer
 ------
 http://www.packer.io
 
-Version history (major revisions)
----------------
-* 2013-08-06 - hannesmuehleisen - Fedora 19 MonetDB.R setup scripts 
-* 2014-03-27 - dnedev - Packer templates, Fedora Kickstart config, additional provisioning
+Docker
+------
+https://www.docker.com

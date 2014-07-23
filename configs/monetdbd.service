@@ -1,0 +1,13 @@
+[Unit]
+Description=MonetDB Server
+After=syslog.target network.target auditd.service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/monetdbd start /var/monetdb5/dbfarm
+ExecStop=/usr/bin/monetdbd stop /var/monetdb5/dbfarm
+User=monetdb
+Group=monetdb
+
+[Install]
+WantedBy=multi-user.target

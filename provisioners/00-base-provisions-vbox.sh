@@ -12,19 +12,7 @@ yum upgrade -y
 # Install some needed packages
 yum install -y yum-utils wget
 # Remove old kernels
-package-cleanup -y --oldkernels --count=1
-
-# That scritp will update the welcome message on every network interface change
-# Packer will uploaded it in place
-# Make the script executable
-chmod +x /sbin/ifup-local
-
-# Add the ifup-local scirpt to the rc.local
-echo "#!/bin/bash
-
-/sbin/ifup-local" > /etc/rc.d/rc.local
-# Make rc.local executable
-chmod +x /etc/rc.d/rc.local
+package-cleanup -y
 
 #######################################################
 # Configure services
