@@ -16,10 +16,9 @@ sudo chkconfig --add monetdbd
 sudo chkconfig monetdbd on
 sudo service monetdbd start
 
-# create default database "db"
+# create default database "db" and release it
 sudo -u monetdb -i monetdb create db
 sudo -u monetdb -i monetdb release db
-sudo -u monetdb -i monetdb start db
 
 # set config file for admin management if that was not done already
 if [ ! -f ~/.monetdb ]; then
@@ -31,5 +30,9 @@ mpw=`openssl rand -base64 14`
 mclient db -s "alter user set unencrypted password '$mpw' using old password 'monetdb'";
 echo -e "user=monetdb\npassword=$mpw" > ~/.monetdb
 
-# Make the load-voc-data scirpt executable
+# Start the new database "db"
+sudo -u monetdb -i monetdb start db
+
+# Make the user-setup and load-voc-data scirpt executable
+chmod +x user-setup.sh
 chmod +x load-voc-data.sh

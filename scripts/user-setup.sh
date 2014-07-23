@@ -33,9 +33,9 @@ sudo mv /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
 sudo mv ~/sshd_config /etc/ssh/sshd_config
 sudo service sshd restart
 
-echo "Create non-admin MonetDB user (monetdbuser)"
+echo "Create MonetDB user (monetdbuser)"
 # drop user and voc schema
-mclient db -s "DROP USER \"monetdbuser\""
+mclient db -s "DROP USER \"monetdbuser\"" >> setup.log
 # create new user and set password
 mclient db -s "CREATE USER \"monetdbuser\" WITH PASSWORD '$pw' NAME 'monetdbuser' SCHEMA \"sys\""
 
