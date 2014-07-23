@@ -7,7 +7,7 @@ echo "MONETDB SETUP"
 # change shell for the monetdb user
 sudo chsh -s "/bin/bash" monetdb
 
-# create dbfarm and rig .monetdb file for monetdb user
+# create dbfarm
 sudo -u monetdb -i monetdbd create /var/monetdb5/dbfarm
 # enable start of MonetDB at system startup
 sudo cp ~/monetdbd.centos /etc/init.d/monetdbd

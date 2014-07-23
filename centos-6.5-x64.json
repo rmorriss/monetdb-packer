@@ -127,12 +127,11 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-0-open-ports-{{user `os_type`}}.sh",
-			"only": ["virtualbox-iso", "docker"]
+			"script": "provisioners/30-0-open-monetdb-port-{{user `os_type`}}{{user `os_version`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-monetdb-setup-{{user `os_type`}}.sh"
+			"script": "provisioners/30-monetdb-setup-{{user `os_type`}}{{user `os_version`}}.sh"
 		},
 		{
 			"type": "shell",

@@ -5,7 +5,7 @@
 #######################################################
 echo "MONETDB SETUP"
 chsh -s "/bin/bash" monetdb
-# create dbfarm and rig .monetdb file for monetdb user
+# create dbfarm
 runuser -l monetdb -c 'monetdbd create /var/monetdb5/dbfarm'
 
 # enable start of MonetDB at system startup
