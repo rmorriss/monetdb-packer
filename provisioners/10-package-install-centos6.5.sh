@@ -5,7 +5,7 @@
 ##################################################################
 echo "PACKAGE INSTALL"
 # Enable MonetDB repo
-sudo yum install -y https://www.monetdb.org/downloads/epel/MonetDB-release-epel6-1.0-1.el6.noarch.rpm
+sudo yum install -y https://dev.monetdb.org/downloads/epel/MonetDB-release-epel-1.1-1.monetdb.noarch.rpm
 sudo yum install -y MonetDB-SQL-server5 MonetDB-client MonetDB-geom-MonetDB5
 
 # Install R
