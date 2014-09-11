@@ -67,11 +67,6 @@
 		},
 		{
 			"type": "file",
-			"source": "scripts/ifup-local.sh",
-			"destination": "~/ifup-local"
-		},
-		{
-			"type": "file",
 			"source": "scripts/monetdbshell.sh",
 			"destination": "~/monetdbshell.sh"
 		},
