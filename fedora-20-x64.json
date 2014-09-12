@@ -86,8 +86,16 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/10-package-install-{{user `os_type`}}.sh",
+			"script": "provisioners/02-enable-monetdb-repo-{{user `os_type`}}.sh",
 			"pause_before": "30s"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/11-package-install-monetdb.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/12-package-install-other.sh"
 		},
 		{
 			"type": "shell",
@@ -95,7 +103,11 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-monetdb-setup.sh"
+			"script": "provisioners/30-monetdbd-service-setup.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/31-monetdb-setup.sh"
 		},
 		{
 			"type": "shell",

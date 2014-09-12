@@ -86,6 +86,11 @@
 			"destination": "~/monetdbd.centos"
 		},
 		{
+			"type": "file",
+			"source": "configs/monetdb.repo",
+			"destination": "~/monetdb.repo"
+		},
+		{
 			"type": "shell",
 			"script": "provisioners/00-base-provisions-vbox.sh",
 			"only": ["virtualbox-iso"]
@@ -108,7 +113,7 @@
 		{
 			"pause_before": "30s",
 			"type": "shell",
-			"script": "provisioners/01-enable-epel-repo-{{user `os_type`}}{{user `os_version`}}.sh",
+			"script": "provisioners/01-enable-epel-repo-{{user `os_type`}}.sh",
 			"only": ["virtualbox-iso", "docker"]
 		},
 		{
@@ -119,7 +124,21 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/10-package-install-{{user `os_type`}}{{user `os_version`}}.sh"
+			"script": "provisioners/02-enable-monetdb-repo-{{user `os_type`}}.sh",
+			"only": ["virtualbox-iso", "docker"]
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/02-enable-monetdb-repo-aws.sh",
+			"only": ["amazon-ebs"]
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/11-package-install-monetdb.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/12-package-install-other.sh"
 		},
 		{
 			"type": "shell",
@@ -127,11 +146,15 @@
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-0-open-monetdb-port-{{user `os_type`}}{{user `os_version`}}.sh"
+			"script": "provisioners/30-0-open-monetdb-port-{{user `os_type`}}.sh"
 		},
 		{
 			"type": "shell",
-			"script": "provisioners/30-monetdb-setup-{{user `os_type`}}{{user `os_version`}}.sh"
+			"script": "provisioners/30-monetdbd-service-setup-{{user `os_type`}}.sh"
+		},
+		{
+			"type": "shell",
+			"script": "provisioners/31-monetdb-setup.sh"
 		},
 		{
 			"type": "shell",

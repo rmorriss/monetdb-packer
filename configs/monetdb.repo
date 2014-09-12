@@ -1,0 +1,6 @@
+[monetdb]
+name=MonetDB - $basearch
+baseurl=http://dev.monetdb.org/downloads/epel/6.5/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-MonetDB
